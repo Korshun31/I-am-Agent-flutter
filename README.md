@@ -1,15 +1,15 @@
 # I am Agent (Flutter)
 
-Flutter-версия приложения I am Agent. Полная копия React Native приложения на Flutter/Dart.
+Flutter-версия приложения I am Agent. Портировано с React Native.
 
 ## Требования
 
-- [Flutter SDK](https://flutter.dev/docs/get-started/install) 3.0+
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) 3.0+
 - Dart 3.0+
 
 ## Первоначальная настройка
 
-Если проект создан без `flutter create`, выполните в корне проекта:
+В корне проекта выполните:
 
 ```bash
 flutter create . --project-name i_am_agent_flutter
@@ -23,9 +23,26 @@ flutter pub get
 flutter run
 ```
 
-## Структура (планируется)
+## Что реализовано
 
-- `lib/` — исходный код Dart
-- `lib/screens/` — экраны (RealEstate, Contacts, Account, PropertyDetail и др.)
-- `lib/services/` — Supabase, storage
-- `lib/i18n/` — локализация (en, th, ru)
+- **Supabase** — подключение, аутентификация
+- **Экраны**: Preloader, Login, Registration, Main (нижняя навигация)
+- **Вкладки**: База недвижимости, Bookings, Calendar, Мой кабинет
+- **Мой кабинет** → Контакты, Выход
+- **База недвижимости**: список объектов, поиск, развёртка карточек
+- **Добавление объекта** — модалка (тип, название, код)
+- **Карточка объекта** — детали, для резорта — список домов
+- **Добавление домика в резорт** — модалка (название, внутренний код)
+- **Навигация**: возврат к резорту при «Назад» из домика
+- **Локализация** — en, th, ru
+- **Логотип** — как в RN-версии
+
+## Структура
+
+- `lib/config/` — Supabase URL, ключи
+- `lib/services/` — auth, supabase, properties
+- `lib/models/` — Property
+- `lib/providers/` — LanguageProvider
+- `lib/screens/` — экраны приложения
+- `lib/widgets/` — Logo, BottomNav, AddPropertyModal, AddHouseInResortModal
+- `lib/i18n/` — переводы
