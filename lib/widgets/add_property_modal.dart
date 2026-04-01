@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../assets/app_assets.dart';
 import '../providers/language_provider.dart';
 import '../models/property.dart';
 
 const _propertyTypes = [
-  ('resort', '🏘️', Color(0xFFC8E6C9), Color(0xFF81C784)),
-  ('house', '🏡', Color(0xFFFFF9C4), Color(0xFFFFD54F)),
-  ('condo', '🏢', Color(0xFFBBDEFB), Color(0xFF64B5F6)),
+  ('resort', AppAssets.iconResort, Color(0xFFC8E6C9), Color(0xFF81C784)),
+  ('house', AppAssets.iconHouse, Color(0xFFFFF9C4), Color(0xFFFFD54F)),
+  ('condo', AppAssets.iconCondo, Color(0xFFBBDEFB), Color(0xFF64B5F6)),
 ];
 
 class AddPropertyModal extends StatefulWidget {
@@ -163,7 +164,7 @@ class _AddPropertyModalState extends State<AddPropertyModal> {
                       const SizedBox(height: 8),
                       Row(
                         children: _propertyTypes.map((t) {
-                          final (key, icon, bgColor, borderColor) = t;
+                          final (key, iconPath, bgColor, borderColor) = t;
                           final isActive = _type == key;
                           return Expanded(
                             child: Padding(
@@ -182,7 +183,7 @@ class _AddPropertyModalState extends State<AddPropertyModal> {
                                   ),
                                   child: Column(
                                     children: [
-                                      Text(icon, style: TextStyle(fontSize: 26, color: isActive ? Colors.black87 : Colors.black38)),
+                                      Image.asset(iconPath, width: 36, height: 36, fit: BoxFit.contain),
                                       const SizedBox(height: 4),
                                       Text(
                                         lang.t('propertyType_$key'),

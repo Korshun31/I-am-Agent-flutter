@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../assets/app_assets.dart';
 import '../providers/language_provider.dart';
 import '../services/auth_service.dart';
 
@@ -31,8 +32,8 @@ class AccountScreen extends StatelessWidget {
         children: [
           Card(
             child: ListTile(
-              leading: const CircleAvatar(
-                child: Icon(Icons.person),
+              leading: CircleAvatar(
+                child: Image.asset(AppAssets.account, width: 32, height: 32, fit: BoxFit.contain),
               ),
               title: Text('${user.name} ${user.lastName}'.trim().isEmpty
                   ? user.email
@@ -42,7 +43,7 @@ class AccountScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ListTile(
-            leading: const Icon(Icons.contacts),
+            leading: Image.asset(AppAssets.contacts, width: 24, height: 24, fit: BoxFit.contain),
             title: Consumer<LanguageProvider>(
               builder: (_, lang, __) => Text(lang.t('contacts')),
             ),
@@ -50,7 +51,44 @@ class AccountScreen extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.logout, color: Colors.red),
+            leading: const Icon(Icons.currency_exchange, color: Color(0xFF3D7D82), size: 24),
+            title: Consumer<LanguageProvider>(
+              builder: (_, lang, __) => Text(lang.t('currencySelection')),
+            ),
+            trailing: Consumer<LanguageProvider>(
+              builder: (_, lang, __) => Text(
+                lang.currency,
+                style: const TextStyle(color: Color(0xFF3D7D82), fontWeight: FontWeight.w700),
+              ),
+            ),
+            onTap: () {
+              final lang = context.read<LanguageProvider>();
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                builder: (ctx) => Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: ['THB', 'USD', 'EUR', 'RUB'].map((curr) => ListTile(
+                      title: Text(curr, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      onTap: () {
+                        lang.setCurrency(curr);
+                        Navigator.pop(ctx);
+                      },
+                      selected: lang.currency == curr,
+                      selectedColor: const Color(0xFF3D7D82),
+                    )).toList(),
+                  ),
+                ),
+              );
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Image.asset(AppAssets.logout, width: 24, height: 24, fit: BoxFit.contain),
             title: Consumer<LanguageProvider>(
               builder: (_, lang, __) => Text(
                 lang.t('logout'),

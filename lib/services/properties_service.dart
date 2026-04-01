@@ -25,6 +25,7 @@ Future<Property> createProperty({
   String type = 'house',
   String? locationId,
   String? ownerId,
+  String? currency,
 }) async {
   final session = await supabase.auth.getSession();
   if (session.session?.user == null) {
@@ -38,6 +39,7 @@ Future<Property> createProperty({
     'type': type,
     'location_id': locationId,
     'owner_id': ownerId,
+    'currency': currency,
   }).select().single();
 
   return Property.fromJson(res as Map<String, dynamic>);

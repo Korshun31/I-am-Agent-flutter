@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../assets/app_assets.dart';
 import '../providers/language_provider.dart';
 
 const _tabColors = [
@@ -57,11 +58,7 @@ class BottomNav extends StatelessWidget {
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              _iconForIndex(index),
-                              size: 28,
-                              color: const Color(0xFF2C2C2C),
-                            ),
+                            Image.asset(_iconPathForIndex(index), width: 28, height: 28, fit: BoxFit.contain),
                             const SizedBox(height: 4),
                             Text(
                               lang.t(_tabKeys[index]),
@@ -74,11 +71,7 @@ class BottomNav extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Icon(
-                          _iconForIndex(index),
-                          size: 28,
-                          color: const Color(0xFF2C2C2C),
-                        ),
+                      : Image.asset(_iconPathForIndex(index), width: 28, height: 28, fit: BoxFit.contain),
                 ),
               ),
             );
@@ -88,18 +81,18 @@ class BottomNav extends StatelessWidget {
     );
   }
 
-  IconData _iconForIndex(int i) {
+  String _iconPathForIndex(int i) {
     switch (i) {
       case 0:
-        return Icons.home_work_outlined;
+        return AppAssets.base;
       case 1:
-        return Icons.calendar_today;
+        return AppAssets.bookings;
       case 2:
-        return Icons.event;
+        return AppAssets.calendar;
       case 3:
-        return Icons.person_outline;
+        return AppAssets.account;
       default:
-        return Icons.circle;
+        return AppAssets.base;
     }
   }
 }

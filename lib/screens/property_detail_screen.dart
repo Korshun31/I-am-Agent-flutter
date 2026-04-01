@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../assets/app_assets.dart';
 import '../providers/language_provider.dart';
 import '../models/property.dart';
 import '../services/properties_service.dart';
@@ -152,9 +153,12 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
         backgroundColor: const Color(0xFFF5F2EB),
         elevation: 0,
         actions: [
-          IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: Image.asset(AppAssets.pencil, width: 24, height: 24, fit: BoxFit.contain),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Image.asset(AppAssets.trash, width: 24, height: 24, fit: BoxFit.contain),
             onPressed: () => _confirmDelete(),
           ),
         ],
@@ -176,6 +180,8 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
               _infoRow(context.read<LanguageProvider>().t('propMarket'), _marketDistance != null ? '${_marketDistance} m' : '—'),
             ],
           ),
+          const SizedBox(height: 12),
+          _pricingSection(context),
           if (_p.type == 'resort') ...[
             const SizedBox(height: 12),
             _resortHousesSection(context),
@@ -247,6 +253,28 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
     );
   }
 
+  Widget _pricingSection(BuildContext context) {
+    final lang = context.read<LanguageProvider>();
+    final sym = lang.currencySymbol;
+
+    return _section(
+      color: Colors.white,
+      border: const Color(0xFFE0D8CC),
+      children: [
+        _infoRow(lang.t('pdPriceMonthly'), _p.priceMonthly != null ? '${_p.priceMonthly} $sym' : '—'),
+        _infoRow(lang.t('pdBookingDeposit'), _p.bookingDeposit != null ? '${_p.bookingDeposit} $sym' : '—'),
+        _infoRow(lang.t('pdSaveDeposit'), _p.saveDeposit != null ? '${_p.saveDeposit} $sym' : '—'),
+        _infoRow(lang.t('pdCommission'), _p.commission != null ? '${_p.commission} $sym' : '—'),
+        _infoRow(lang.t('pdElectricity'), _p.electricUnit != null ? '${_p.electricUnit} $sym' : '—'),
+        _infoRow(lang.t('pdWater'), _p.waterUnit != null ? '${_p.waterUnit} $sym' : '—'),
+        _infoRow(lang.t('pdGas'), _p.gasUnit != null ? '${_p.gasUnit} $sym' : '—'),
+        _infoRow(lang.t('pdInternetMonth'), _p.internetMonth != null ? '${_p.internetMonth} $sym' : '—'),
+        _infoRow(lang.t('pdCleaning'), _p.cleaningPrice != null ? '${_p.cleaningPrice} $sym' : '—'),
+        _infoRow(lang.t('pdExitCleaning'), _p.exitCleaningPrice != null ? '${_p.exitCleaningPrice} $sym' : '—'),
+      ],
+    );
+  }
+
   Widget _resortHousesSection(BuildContext context) {
     final lang = context.read<LanguageProvider>();
 
@@ -263,7 +291,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
             ),
             IconButton(
               onPressed: () => setState(() => _addHouseModalVisible = true),
-              icon: const Icon(Icons.add_circle_outline),
+              icon: Image.asset(AppAssets.addProperty, width: 28, height: 28, fit: BoxFit.contain),
               tooltip: lang.t('addProperty'),
             ),
           ],
@@ -300,7 +328,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               child: Row(
                 children: [
-                  const Icon(Icons.home, size: 28),
+                  Image.asset(AppAssets.iconHouse, width: 28, height: 28, fit: BoxFit.contain),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -323,9 +351,9 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                         }
                       });
                     },
-                    icon: Icon(
-                      expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                      color: Colors.grey[700],
+                    icon: Transform.rotate(
+                      angle: expanded ? 3.14159 : 0,
+                      child: Image.asset(AppAssets.arrowDown, width: 24, height: 24, fit: BoxFit.contain),
                     ),
                   ),
                 ],

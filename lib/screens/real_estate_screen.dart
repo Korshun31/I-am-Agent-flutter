@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../assets/app_assets.dart';
 import '../providers/language_provider.dart';
 import '../models/property.dart';
 import '../services/properties_service.dart';
@@ -62,7 +63,12 @@ class _RealEstateScreenState extends State<RealEstateScreen> {
   }) async {
     final lang = context.read<LanguageProvider>();
     try {
-      await createProperty(name: name, code: code, type: type);
+      await createProperty(
+        name: name,
+        code: code,
+        type: type,
+        currency: lang.currency,
+      );
       if (mounted) setState(() => _addModalVisible = false);
       _loadProperties();
     } catch (e) {
@@ -221,7 +227,7 @@ class _RealEstateScreenState extends State<RealEstateScreen> {
                   const SizedBox(width: 8),
                   IconButton(
                     onPressed: () => setState(() => _addModalVisible = true),
-                    icon: const Icon(Icons.add_circle_outline, size: 28),
+                    icon: Image.asset(AppAssets.addProperty, width: 28, height: 28, fit: BoxFit.contain),
                   ),
                   IconButton(
                     onPressed: () {
@@ -233,9 +239,11 @@ class _RealEstateScreenState extends State<RealEstateScreen> {
                         }
                       });
                     },
-                    icon: Icon(
-                      _expandedIds.length == sorted.length ? Icons.folder_open : Icons.folder,
-                      size: 28,
+                    icon: Image.asset(
+                      _expandedIds.length == sorted.length ? AppAssets.folderOpen : AppAssets.folderClosed,
+                      width: 28,
+                      height: 28,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ],
@@ -332,7 +340,7 @@ class _PropertyItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Row(
                   children: [
-                    Icon(_iconForType(item.type), size: 28),
+                    Image.asset(_iconPathForType(item.type), width: 28, height: 28, fit: BoxFit.contain),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -355,9 +363,9 @@ class _PropertyItem extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: onToggle,
-                      icon: Icon(
-                        expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                        color: Colors.grey[700],
+                      icon: Transform.rotate(
+                        angle: expanded ? 3.14159 : 0,
+                        child: Image.asset(AppAssets.arrowDown, width: 24, height: 24, fit: BoxFit.contain),
                       ),
                     ),
                   ],
@@ -385,7 +393,7 @@ class _PropertyItem extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(item.photos!.first, fit: BoxFit.cover),
                             )
-                          : const Icon(Icons.photo, color: Colors.grey),
+                          : Image.asset(AppAssets.photo, width: 40, height: 40, fit: BoxFit.contain),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -431,14 +439,14 @@ class _PropertyItem extends StatelessWidget {
     );
   }
 
-  IconData _iconForType(String type) {
+  String _iconPathForType(String type) {
     switch (type) {
       case 'resort':
-        return Icons.apartment;
+        return AppAssets.iconResort;
       case 'condo':
-        return Icons.business;
+        return AppAssets.iconCondo;
       default:
-        return Icons.home;
+        return AppAssets.iconHouse;
     }
   }
 }

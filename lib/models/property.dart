@@ -19,6 +19,17 @@ class Property {
   final int? marketDistance;
   final List<String>? photos;
   final List<String>? videos;
+  final String? currency;
+  final double? priceMonthly;
+  final double? bookingDeposit;
+  final double? saveDeposit;
+  final double? commission;
+  final double? electricUnit;
+  final double? waterUnit;
+  final double? gasUnit;
+  final double? internetMonth;
+  final double? cleaningPrice;
+  final double? exitCleaningPrice;
 
   Property({
     required this.id,
@@ -41,6 +52,17 @@ class Property {
     this.marketDistance,
     this.photos,
     this.videos,
+    this.currency,
+    this.priceMonthly,
+    this.bookingDeposit,
+    this.saveDeposit,
+    this.commission,
+    this.electricUnit,
+    this.waterUnit,
+    this.gasUnit,
+    this.internetMonth,
+    this.cleaningPrice,
+    this.exitCleaningPrice,
   });
 
   factory Property.fromJson(Map<String, dynamic> json) {
@@ -50,7 +72,7 @@ class Property {
       code: json['code']?.toString() ?? '',
       type: json['type']?.toString() ?? 'house',
       resortId: json['resort_id']?.toString(),
-    locationId: json['location_id']?.toString(),
+      locationId: json['location_id']?.toString(),
       city: json['city']?.toString(),
       district: json['district']?.toString(),
       codeSuffix: json['code_suffix']?.toString(),
@@ -65,6 +87,17 @@ class Property {
       marketDistance: _toInt(json['market_distance']),
       photos: (json['photos'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
       videos: (json['videos'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
+      currency: json['currency']?.toString(),
+      priceMonthly: _toDouble(json['price_monthly']),
+      bookingDeposit: _toDouble(json['booking_deposit']),
+      saveDeposit: _toDouble(json['save_deposit']),
+      commission: _toDouble(json['commission']),
+      electricUnit: _toDouble(json['electric_unit']),
+      waterUnit: _toDouble(json['water_unit']),
+      gasUnit: _toDouble(json['gas_unit']),
+      internetMonth: _toDouble(json['internet_month']),
+      cleaningPrice: _toDouble(json['cleaning_price']),
+      exitCleaningPrice: _toDouble(json['exit_cleaning_price']),
     );
   }
 
@@ -94,6 +127,17 @@ class Property {
     int? beachDistance,
     int? marketDistance,
     List<String>? photos,
+    String? currency,
+    double? priceMonthly,
+    double? bookingDeposit,
+    double? saveDeposit,
+    double? commission,
+    double? electricUnit,
+    double? waterUnit,
+    double? gasUnit,
+    double? internetMonth,
+    double? cleaningPrice,
+    double? exitCleaningPrice,
   }) {
     return Property(
       id: id,
@@ -115,6 +159,17 @@ class Property {
       marketDistance: marketDistance ?? this.marketDistance,
       photos: photos ?? this.photos,
       videos: videos,
+      currency: currency ?? this.currency,
+      priceMonthly: priceMonthly ?? this.priceMonthly,
+      bookingDeposit: bookingDeposit ?? this.bookingDeposit,
+      saveDeposit: saveDeposit ?? this.saveDeposit,
+      commission: commission ?? this.commission,
+      electricUnit: electricUnit ?? this.electricUnit,
+      waterUnit: waterUnit ?? this.waterUnit,
+      gasUnit: gasUnit ?? this.gasUnit,
+      internetMonth: internetMonth ?? this.internetMonth,
+      cleaningPrice: cleaningPrice ?? this.cleaningPrice,
+      exitCleaningPrice: exitCleaningPrice ?? this.exitCleaningPrice,
     );
   }
 }
